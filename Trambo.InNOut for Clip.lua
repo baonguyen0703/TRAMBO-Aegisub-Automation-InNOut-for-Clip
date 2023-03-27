@@ -1,7 +1,7 @@
 script_name="@TRAMBO: In N Out for Clip"
 script_description="In N Out for Clip"
 script_author="TRAMBO"
-script_version="1.0"
+script_version="1.1"
 
 require "karaskel"
 
@@ -93,7 +93,7 @@ function open_dialog(sub,sel,act)
     local time = {s1,e1,s2,e2}
     local ratio = {true,true,true,true}
     for i=1,#time,1 do 
-      if time[i] > 1 or time[i] < 0 then
+      if time[i] > 1 or time[i] < -1 then
         ratio[i] = false
       end
     end
@@ -133,6 +133,9 @@ function open_dialog(sub,sel,act)
         for i=1,#ratio,1 do
           if ratio[i] == true then
             time[i] = line.duration * time[i]
+            if time[i] < 0 then 
+              time[i] = line.duration + time[i]
+            end
           elseif time[i] < 0 then
             time[i]=line.duration + time[i]
             if time[i] < 0 then
